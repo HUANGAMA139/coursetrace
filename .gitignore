@@ -1,0 +1,44 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+
+# Local data, dependency caches and build artifacts
+.local/
+.tools/
+**/target/
+**/node_modules/
+**/dist/
+*.log
+*.zip
+*.7z
+*.mp4
+*.webm
+*.wav
+*.mp3
+*.flac
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Personal planning and development notes stay local
+/AGENTS.md
+/CourseTrace-*.md
+
+# Publish only documentation needed to understand and run the project
+/docs/**
+!/docs/quickstart.md
+!/docs/architecture.md
+!/docs/testing.md
+!/docs/assets/
+!/docs/assets/*.png
+!/docs/demo/
+!/docs/demo/lesson-source.txt
+!/docs/demo/questions.json
+!/docs/demo/narration.json

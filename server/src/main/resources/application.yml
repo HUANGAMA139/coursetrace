@@ -1,0 +1,133 @@
+spring:
+  data:
+    redis:
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 1s
+      connect-timeout: 1s
+  kafka:
+    properties:
+      reconnect.backoff.ms: 1000
+      reconnect.backoff.max.ms: 10000
+      retry.backoff.ms: 1000
+      retry.backoff.max.ms: 10000
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:127.0.0.1:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      properties:
+        enable.idempotence: true
+        request.timeout.ms: 5000
+        delivery.timeout.ms: 10000
+        max.block.ms: 2000
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      enable-auto-commit: false
+      auto-offset-reset: earliest
+      max-poll-records: 1
+      properties:
+        max.poll.interval.ms: 600000
+        default.api.timeout.ms: 10000
+    listener:
+      ack-mode: record
+      poll-timeout: 500
+
+  application:
+    name: coursetrace
+  profiles:
+    default: local
+  jackson:
+    default-property-inclusion: non_null
+  flyway:
+    enabled: true
+  servlet:
+    multipart:
+      max-file-size: ${VIDEO_MAX_UPLOAD_SIZE:500MB}
+      max-request-size: ${VIDEO_MAX_REQUEST_SIZE:510MB}
+      file-size-threshold: 0
+server:
+  address: 127.0.0.1
+  port: ${SERVER_PORT:8080}
+  servlet:
+    session:
+      timeout: 30m
+      cookie:
+        name: COURSETRACE_SESSION
+        http-only: true
+        same-site: lax
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    banner: false
+management:
+  health:
+    redis:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+coursetrace:
+  upload:
+    chunk-bytes: ${UPLOAD_CHUNK_BYTES:8388608}
+    expire-hours: ${UPLOAD_EXPIRE_HOURS:24}
+    max-sessions: ${UPLOAD_MAX_SESSIONS:3}
+  rate-limit:
+    enabled: ${RATE_LIMIT_ENABLED:true}
+    qa-capacity: ${RATE_QA_CAPACITY:2}
+    qa-refill-seconds: ${RATE_QA_REFILL_SECONDS:10}
+    global-qa-capacity: ${RATE_GLOBAL_QA_CAPACITY:10}
+    global-qa-refill-seconds: ${RATE_GLOBAL_QA_REFILL_SECONDS:1}
+    learning-capacity: ${RATE_LEARNING_CAPACITY:1}
+    learning-refill-seconds: ${RATE_LEARNING_REFILL_SECONDS:60}
+    global-learning-capacity: ${RATE_GLOBAL_LEARNING_CAPACITY:3}
+    global-learning-refill-seconds: ${RATE_GLOBAL_LEARNING_REFILL_SECONDS:20}
+    global-index-capacity: ${RATE_GLOBAL_INDEX_CAPACITY:4}
+    global-index-refill-seconds: ${RATE_GLOBAL_INDEX_REFILL_SECONDS:10}
+    index-capacity: ${RATE_INDEX_CAPACITY:2}
+    index-refill-seconds: ${RATE_INDEX_REFILL_SECONDS:30}
+  agent:
+    max-rounds: ${AGENT_MAX_ROUNDS:4}
+    deadline-seconds: ${AGENT_DEADLINE_SECONDS:120}
+  retrieval:
+    qdrant-url: ${QDRANT_URL:http://127.0.0.1:6333}
+    embedding-model: ${QWEN_EMBEDDING_MODEL:text-embedding-v4}
+    dimensions: ${QWEN_EMBEDDING_DIMENSIONS:1024}
+    collection: ${QDRANT_COLLECTION:coursetrace_segments_te4_1024_v1}
+    target-chars: ${SEARCH_TARGET_CHARS:800}
+    max-chars: ${SEARCH_MAX_CHARS:1200}
+    max-bytes: ${SEARCH_MAX_BYTES:6000}
+    overlap-chars: ${SEARCH_OVERLAP_CHARS:160}
+    batch-size: ${SEARCH_BATCH_SIZE:10}
+    max-chunks: ${SEARCH_MAX_CHUNKS:200}
+    top-k: ${SEARCH_TOP_K:6}
+  learning:
+    api-key: ${DASHSCOPE_API_KEY:}
+    native-base: ${DASHSCOPE_HTTP_BASE_URL:https://dashscope.aliyuncs.com/api/v1}
+    chat-base: ${QWEN_BASE_URL:https://dashscope.aliyuncs.com/compatible-mode/v1}
+    asr-model: ${QWEN_ASR_MODEL:qwen-audio-3.1-asr-flash-filetrans}
+    chat-model: ${QWEN_CHAT_MODEL:qwen3.7-plus}
+    ffmpeg-path: ${FFMPEG_PATH:.tools/ffmpeg/ffmpeg-9.0.2-essentials_build/bin/ffmpeg.exe}
+    max-duration-seconds: ${LEARNING_MAX_DURATION_SECONDS:3600}
+  processing:
+    enabled: ${PROCESSING_ENABLED:true}
+    publisher-enabled: ${PROCESSING_PUBLISHER_ENABLED:true}
+    max-publish-attempts: ${PROCESSING_MAX_PUBLISH_ATTEMPTS:20}
+    stale-minutes: 10
+
+  storage:
+    endpoint: ${MINIO_ENDPOINT:http://127.0.0.1:9000}
+    access-key: ${MINIO_ROOT_USER:coursetrace}
+    secret-key: ${MINIO_ROOT_PASSWORD:}
+    bucket: ${MINIO_VIDEO_BUCKET:coursetrace-videos}
+  media:
+    ffprobe-path: ${FFPROBE_PATH:.tools/ffmpeg/ffmpeg-9.0.2-essentials_build/bin/ffprobe.exe}
+    temp-directory: ${VIDEO_TEMP_DIRECTORY:.local/uploads}
+    probe-timeout-seconds: 15

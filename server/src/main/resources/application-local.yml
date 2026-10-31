@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: ${MYSQL_URL:jdbc:mysql://127.0.0.1:3307/coursetrace?connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false}
+    username: ${MYSQL_USER:coursetrace}
+    password: ${MYSQL_PASSWORD}
+    hikari:
+      maximum-pool-size: 5

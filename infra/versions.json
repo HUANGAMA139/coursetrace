@@ -1,0 +1,32 @@
+{
+  "lockedOn": "2026-10-31",
+  "javaRuntime": "25.0.2",
+  "javaReleaseTarget": 21,
+  "maven": "3.9.14",
+  "springBoot": "3.5.16",
+  "mybatisPlus": "3.5.18",
+  "langchain4jBom": "1.22.0",
+  "node": "24.22.1",
+  "packageManager": "pnpm@11.25.0",
+  "frontend": {
+    "vue": "3.5.44",
+    "vite": "8.3.5",
+    "@vitejs/plugin-vue": "6.0.10",
+    "vue-router": "5.4.0",
+    "@noble/hashes": "2.0.1"
+  },
+  "ffmpeg": "9.0.2-essentials_build",
+  "dockerEngine": "29.8.0",
+  "dockerCompose": "5.5.1",
+  "qwen": {
+    "chat": "qwen3.7-plus",
+    "embedding": "text-embedding-v4",
+    "dimensions": 1024,
+    "asr": "qwen-audio-3.1-asr-flash-filetrans"
+  },
+  "note": "Windows IDEA startup, resumable MinIO uploads, Redis token-bucket admission, Kafka learning/index tasks and cited course answers are covered by local verification; credentials and raw reports stay local.",
+  "minioJavaSdk": "9.0.3",
+  "okhttpJvm": "5.3.2",
+  "kotlinRuntime": "2.2.21",
+  "redis": "8.0.3"
+}

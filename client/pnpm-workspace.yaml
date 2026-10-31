@@ -1,0 +1,4 @@
+packages:
+  - "."
+storeDir: .tools/pnpm-store
+registry: https://registry.npmjs.org
